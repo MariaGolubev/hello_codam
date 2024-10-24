@@ -1,3 +1,9 @@
+# Hello to all students at Codam!
+
+Welcome to the world of programming in **C** using **GTK4** and **libadwaita**.
+
+
+# [Makefile](https://github.com/RustPanda/hello_codam/blob/main/Makefile)
 ```makefile
 NAME = hello_codam
 
@@ -32,6 +38,8 @@ re: fclean all
 
 .PHONY: all clean fclean re
 ```
+
+# [main.c](https://github.com/RustPanda/hello_codam/blob/main/src/main.c)
 ```c
 /* ************************************************k************************** */
 /*                                                                            */
@@ -74,9 +82,9 @@ static AdwStatusPage *f_new_status_page(void)
 static void on_activate (GtkApplication *app, gpointer)
 {
 	AdwApplicationWindow	*window;
-	GtkWidget				*vbox;
-	AdwHeaderBar			*header_bar;
-	AdwStatusPage			*status_page;
+	GtkWidget		*vbox;
+	AdwHeaderBar		*header_bar;
+	AdwStatusPage		*status_page;
 
 	window = ADW_APPLICATION_WINDOW(adw_application_window_new(app));
 	vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
@@ -93,7 +101,7 @@ static void on_activate (GtkApplication *app, gpointer)
 int	main(int argc, char *argv[])
 {
 	AdwApplication	*app;
-	int				status;
+	int		status;
 
 	adw_init();
 	app = adw_application_new("org.gtk.example", G_APPLICATION_DEFAULT_FLAGS);
