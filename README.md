@@ -5,6 +5,7 @@ Welcome to the world of programming in **C** using **GTK4** and **libadwaita**.
 <p align="center">
   <img src="/Screenshot.png" alt="Screenshot">
 </p>
+
 # [Makefile](https://github.com/RustPanda/hello_codam/blob/main/Makefile)
 ```makefile
 NAME = hello_codam
