@@ -6,7 +6,7 @@
 /*   By: mgolubev <mgolubev@student.codam.nl>          +#+                    */
 /*                                                    +#+                     */
 /*   Created: 2024/10/24 20:33:50 by mgolubev       #+#    #+#                */
-/*   Updated: 2024/10/24 21:40:37 by mgolubev       ########   odam.nl        */
+/*   Updated: 2024/10/25 14:42:51 by mgolubev       ########   odam.nl        */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static AdwStatusPage *f_new_status_page(void)
 	gtk_widget_set_hexpand(GTK_WIDGET(status_page), TRUE);
 	gtk_widget_set_vexpand(GTK_WIDGET(status_page), TRUE);
 	adw_status_page_set_title(status_page, "Hello Codam");
+	gtk_widget_add_css_class(GTK_WIDGET(status_page), "accent");
 	return (status_page);
 }
 
