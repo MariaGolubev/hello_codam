@@ -52,7 +52,7 @@ re: fclean all
 /*   By: mgolubev <mgolubev@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2024/10/24 20:33:50 by mgolubev      #+#    #+#                 */
-/*   Updated: 2024/12/22 12:34:43 by maria         ########   odam.nl         */
+/*   Updated: 2024/12/22 12:57:33 by maria         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,28 +63,27 @@ re: fclean all
 
 static GtkWidget	*f_new_header_bar(void)
 {
-	AdwHeaderBar	*header_bar;
+	GtkWidget	*header_bar;
 
-	header_bar = ADW_HEADER_BAR(adw_header_bar_new());
-	gtk_widget_set_hexpand(GTK_WIDGET(header_bar), TRUE);
-	gtk_widget_set_vexpand(GTK_WIDGET(header_bar), FALSE);
-	gtk_widget_set_valign(GTK_WIDGET(header_bar), GTK_ALIGN_START);
-	gtk_widget_add_css_class(GTK_WIDGET(header_bar), "flat");
-	adw_header_bar_set_show_title(header_bar, FALSE);
-	return (GTK_WIDGET(header_bar));
+	header_bar = adw_header_bar_new();
+	gtk_widget_set_hexpand(header_bar, TRUE);
+	gtk_widget_set_vexpand(header_bar, FALSE);
+	gtk_widget_set_valign(header_bar, GTK_ALIGN_START);
+	gtk_widget_add_css_class(header_bar, "flat");
+	adw_header_bar_set_show_title(ADW_HEADER_BAR(header_bar), FALSE);
+	return (header_bar);
 }
 
 static GtkWidget	*f_new_status_page(void)
 {
-	AdwStatusPage	*status_page;
+	GtkWidget	*status_page;
 
-	status_page = ADW_STATUS_PAGE(adw_status_page_new());
-	gtk_widget_set_hexpand(GTK_WIDGET(status_page), TRUE);
-	gtk_widget_set_vexpand(GTK_WIDGET(status_page), TRUE);
-	adw_status_page_set_title(status_page, "Hello Codam");
-	gtk_widget_add_css_class(GTK_WIDGET(status_page), "accent");
-	gtk_widget_add_css_class(GTK_WIDGET(status_page), "meoww");
-	return (GTK_WIDGET(status_page));
+	status_page = adw_status_page_new();
+	gtk_widget_set_hexpand(status_page, TRUE);
+	gtk_widget_set_vexpand(status_page, TRUE);
+	adw_status_page_set_title(ADW_STATUS_PAGE(status_page), "Hello Codam");
+	gtk_widget_add_css_class(status_page, "accent");
+	return (status_page);
 }
 
 static void	f_set_css_provider(const char *css)
@@ -113,6 +112,7 @@ static void	on_activate(GtkApplication *app, gpointer ptr)
 	gtk_window_set_title(GTK_WINDOW(window), "Hello Codam!");
 	gtk_window_set_default_size(GTK_WINDOW(window), 800, 600);
 	adw_application_window_set_content(window, overlay);
+	gtk_widget_add_css_class(GTK_WIDGET(window), "meoww");
 	f_set_css_provider(CSS);
 	gtk_window_present(GTK_WINDOW(window));
 }
