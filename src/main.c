@@ -1,31 +1,34 @@
-/* ************************************************k************************** */
+/* ************************************************************************** */
 /*                                                                            */
-/*                                                         ::::::::           */
-/*   main.c                                              :+:    :+:           */
-/*                                                      +:+                   */
-/*   By: mgolubev <mgolubev@student.codam.nl>          +#+                    */
-/*                                                    +#+                     */
-/*   Created: 2024/10/24 20:33:50 by mgolubev       #+#    #+#                */
-/*   Updated: 2024/10/25 14:42:51 by mgolubev       ########   odam.nl        */
+/*                                                        ::::::::            */
+/*   main.c                                             :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: mgolubev <mgolubev@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2024/10/24 20:33:50 by mgolubev      #+#    #+#                 */
+/*   Updated: 2024/12/22 12:34:43 by maria         ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <gtk/gtk.h>
 #include <adwaita.h>
 
-static AdwHeaderBar	*f_new_header_bar(void)
+#define CSS ".meoww {border: 3px solid @accent_color; border-radius: 10px;}"
+
+static GtkWidget	*f_new_header_bar(void)
 {
 	AdwHeaderBar	*header_bar;
 
 	header_bar = ADW_HEADER_BAR(adw_header_bar_new());
 	gtk_widget_set_hexpand(GTK_WIDGET(header_bar), TRUE);
 	gtk_widget_set_vexpand(GTK_WIDGET(header_bar), FALSE);
+	gtk_widget_set_valign(GTK_WIDGET(header_bar), GTK_ALIGN_START);
 	gtk_widget_add_css_class(GTK_WIDGET(header_bar), "flat");
 	adw_header_bar_set_show_title(header_bar, FALSE);
-	return (header_bar);
+	return (GTK_WIDGET(header_bar));
 }
 
-static AdwStatusPage *f_new_status_page(void)
+static GtkWidget	*f_new_status_page(void)
 {
 	AdwStatusPage	*status_page;
 
@@ -34,25 +37,37 @@ static AdwStatusPage *f_new_status_page(void)
 	gtk_widget_set_vexpand(GTK_WIDGET(status_page), TRUE);
 	adw_status_page_set_title(status_page, "Hello Codam");
 	gtk_widget_add_css_class(GTK_WIDGET(status_page), "accent");
-	return (status_page);
+	gtk_widget_add_css_class(GTK_WIDGET(status_page), "meoww");
+	return (GTK_WIDGET(status_page));
 }
 
-static void on_activate (GtkApplication *app, gpointer)
+static void	f_set_css_provider(const char *css)
+{
+	GtkCssProvider	*css_provider;
+	GdkDisplay		*display;
+
+	css_provider = gtk_css_provider_new();
+	display = gdk_display_get_default();
+	gtk_css_provider_load_from_string(css_provider, css);
+	gtk_style_context_add_provider_for_display(display,
+		GTK_STYLE_PROVIDER(css_provider),
+		GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
+}
+
+static void	on_activate(GtkApplication *app, gpointer ptr)
 {
 	AdwApplicationWindow	*window;
-	GtkWidget				*vbox;
-	AdwHeaderBar			*header_bar;
-	AdwStatusPage			*status_page;
+	GtkWidget				*overlay;
 
+	(void)ptr;
+	overlay = gtk_overlay_new();
+	gtk_overlay_set_child(GTK_OVERLAY(overlay), f_new_status_page());
+	gtk_overlay_add_overlay(GTK_OVERLAY(overlay), f_new_header_bar());
 	window = ADW_APPLICATION_WINDOW(adw_application_window_new(app));
-	vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-	header_bar = f_new_header_bar();
-	status_page = f_new_status_page();
 	gtk_window_set_title(GTK_WINDOW(window), "Hello Codam!");
 	gtk_window_set_default_size(GTK_WINDOW(window), 800, 600);
-	adw_application_window_set_content(window, vbox);
-	gtk_box_append(GTK_BOX(vbox), GTK_WIDGET(header_bar));
-	gtk_box_append(GTK_BOX(vbox), GTK_WIDGET(status_page));
+	adw_application_window_set_content(window, overlay);
+	f_set_css_provider(CSS);
 	gtk_window_present(GTK_WINDOW(window));
 }
 
